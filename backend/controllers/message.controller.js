@@ -1,3 +1,6 @@
+import Conversation from '../models/conversation.model.js';
+import Message from '../models/message.model.js';
+
 export const sendMessage = async (req,res)=> {
     try{
     const {message} = req.body;
@@ -22,6 +25,9 @@ export const sendMessage = async (req,res)=> {
     if(newMessage){
         conversation.messages.push(newMessage._id)
     }
+
+    await newMessage.save();
+    await conversation.save();
 
     res.status(201).json(newMessage);
 
